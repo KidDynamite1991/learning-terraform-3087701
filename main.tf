@@ -67,17 +67,15 @@ module "alb" {
     }
   }
 
-  
- listeners = {
-    http = {
-      port     = 80
-      protocol = "HTTP"
-
+  listeners = {
+    http = {
+      port     = 80
+      protocol = "HTTP"
       forward = {
         target_group_key = "blog-instance"
       }
     }
- }
+  }
 
   tags = {
     Environment = "dev"
