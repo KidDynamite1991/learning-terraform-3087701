@@ -66,16 +66,16 @@ module "alb" {
       target_id        = "aws_instance.blog.id"
     }
   }
-
-  listeners = {
+  listeners = {
     http = {
-      port     = 80
-      protocol = "HTTP"
-      forward = {
-        target_group_key = "blog-instance"
-      }
-    }
-  }
+      port            = 80
+      protocol        = "HTTP"
+
+      forward = {
+        target_group_key = "blog-instance"
+      }
+    }
+  }
 
   tags = {
     Environment = "dev"
