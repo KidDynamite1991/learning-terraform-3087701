@@ -60,14 +60,15 @@ module "blog_alb" {
   subnets         = module.blog_vpc.public_subnets
   security_groups = [module.blog_sg.security_group_id]
 
+  
+  enable_target_group_attachment = false
 
   target_groups = {
     blog-instance = {
       name_prefix      = "blog-"
       protocol         = "HTTP"
       port             = 80
-      target_type      = "instance"
-      
+      target_type      = "instance"  
     }
   }
   listeners = {
