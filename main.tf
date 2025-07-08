@@ -37,7 +37,7 @@ module "blog_vpc" {
 }
 
 
-module "autoscaling" {
+module "blog_autoscaling" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "9.0.1"
   
@@ -67,7 +67,6 @@ module "blog_alb" {
       protocol         = "HTTP"
       port             = 80
       target_type      = "instance"
-      target_id        = aws_instance.blog.id
       
     }
   }
@@ -100,4 +99,10 @@ module "blog_sg" {
 
   egress_rules       = ["all-all"]
   egress_cidr_blocks = ["0.0.0.0/0"]
+}
+
+
+resource "aws_autoscaling_attachment" "asg_attachment" {
+  autoscaling_group_name = module.blog_autoscaling.autoscaling_group_name
+  alb_target_group_arn   = module.blog_alb.target_groups["blog-instance"].arn
 }
